@@ -1,0 +1,95 @@
+---
+title: "Sports Data Distributions"
+output: html_notebook
+---
+# By Diomides Suero 
+# Loading library and packages
+```{r}
+library(tidyverse)
+library(ggplot2)
+```
+# Uploading data set 
+
+```{r}
+# reading file as csv
+richest<-read_csv("richest_athletes.csv")
+richest
+```
+# Filtering Year 2015-2020
+
+```{r}
+# highest paid Sport in the US (nationality) in last 5 year
+newdata<-rename(richest, Earnings= "earnings ($ million)")
+usa<-filter(newdata, Nationality=="USA" & Year>=2015)
+usa
+```
+
+
+# Histogram 1
+```{r}
+#histogram
+ggplot(data = usa) + geom_histogram(mapping = aes(x = Earnings, fill=Sport), bins = 15) + 
+  labs(title = "Highest Paid Sports in the U.S. From 2015-2020",subtitle="Sports vs. Earnings",
+x = "Earnings ($Million)", y = "Count")
+```
+# summary and Standard deviation
+```{r}
+# summary 
+summary(usa)
+
+# standard deviation
+sd<-summarize(usa,
+                   sdCutPrice=sd(Earnings))
+sd
+```
+# Filtering Year 2005-2020
+```{r}
+# highest paid Sport in the world (15 years)
+
+world<-filter(newdata, Year>=2005)
+world
+```
+# Histogram 2
+
+```{r}
+#histogram
+ggplot(data = world) + geom_histogram(mapping = aes(x = Earnings, fill=Nationality), bins = 15) + 
+  labs(title = "Highest Paid Sports in the World From 2005-2020",subtitle="Sports vs. Earnings",
+x = "Earnings ($Million)", y = "Count")
+```
+# summary and Standard deviation
+```{r}
+# summary 
+summary(world)
+
+# standard deviation
+sd1<-summarize(world,
+                   sdworld=sd(Earnings))
+sd1
+```
+# Filtering year 2018-2020
+```{r}
+# highest paid athlete in the world (2 years)
+
+worldafter<-filter(newdata, Year>=2018)
+worldafter
+```
+
+# Histogram 3
+```{r}
+#histogram
+ggplot(data = worldafter) + geom_histogram(mapping = aes(x = Earnings, fill=Name), bins = 15) + 
+  labs(title = "Highest Paid Athlete in the World (2018-2020)",subtitle="Athlete vs. Earnings",
+x = "Earnings ($Million)", y = "Count")
+```
+# summary and Standard deviation
+```{r}
+# summary 
+summary(worldafter)
+
+# standard deviation
+sda<-summarize(worldafter,
+                   sdworldafter=sd(Earnings))
+sda
+```
+
